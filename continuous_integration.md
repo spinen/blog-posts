@@ -1,5 +1,7 @@
 Continuous Integration (CI) and Continuous Delivery (CD) are natural counterparts of the Agile process. At Spinen we started working on a  model of Continuous Integration about 2 years ago. We are a small team (about 7 people) and our CI model has evolved over time. About 1 year ago we brought on some new graduates. Bringing on new people really forced us to standardize some practices we had been trying. It also helped us identify some (figurative) land mines that we had all simply known to step around up to that point.
 
+#### Coding out a feature
+
 Our CI model is built from the [git-flow](https://github.com/nvie/gitflow) model of project development. Usually any project is cloned from our working 'base' for that type of project. The new project therefore starts with identical develop and master branches. From that starting point our project development then goes like this:
 
 1. Developer A - let's call him Robin - clones the project and initializes git flow locally with `git flow init -d`
@@ -16,6 +18,7 @@ Our CI model is built from the [git-flow](https://github.com/nvie/gitflow) model
 ```
 We have had great success with making MRs from junior -> senior and from senior -> junior. However describing our thought process on that, and code review in general, is a separate blog post.
 ```
+#### Starting a Release
 
 Because of this process code in our `develop` branch stays relatively stable. But you've probably noticed that the widget Robin added is still not in production, where the customer is desperately waiting for it. The process for it to get there is also simple:
 
@@ -27,6 +30,8 @@ Because of this process code in our `develop` branch stays relatively stable. Bu
 	c. Deploy the code to our QandA environment
 
 The QandA site is a publicly accessible site deployed to a production-like environment. This allows the customer to mess around with the new widget and find all the bugs that we haven't already found.  At this point any work done on the `release/X.Y.ZZ` branch should be bug fixes to make the promised widget work. If the customer comes up with new ideas, for a new feature, those changes should not be added to the current release.
+
+#### Merging into Master
 
 Assuming the customer loves the widget and is ready to push it to production:
 
