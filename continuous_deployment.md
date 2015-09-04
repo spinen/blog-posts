@@ -1,0 +1,1 @@
+Here at Spinen we have been workingon a Continous Integration/Continous Deployment model for about 2 years.

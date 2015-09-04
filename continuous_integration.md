@@ -8,14 +8,14 @@ Our CI model is built from the [git-flow](https://github.com/nvie/gitflow) model
 4. Robin pushes `feature/add-widget` to the central git repository. (this is where we stray slightly from git-flow orthodoxy)
 5. Robin's push automatically runs all tests on our [Jenkins](http://jenkins-ci.org) server
 6. Robin makes a Merge Request (MR) from his branch (`feature/add-widget`) to `develop` and assigns it to another developer - let's call him Batman. Because Jenkins ran all tests on the feature push, we are able to see the test status of feature before we merge.  This allows the merge reviewer to focus on higher level questions, rather than bothering about linting, etc.
-
-```
-We have had great success with making MRs from junior -> senior and from senior -> junior. However describing our thought process on that, and code review in general, is a separate blog post.
-```
 7. Batman approves - `feature/add-widget` is merged into `develop`. This prompts a series of actions by Jenkins:
 	a. Run all tests again
 	b. Create an artifact (a zip file in this case) of everything needed to deploy the code, including all dependencies.
 	c. Deploy the code to our development environment.
+	
+```
+We have had great success with making MRs from junior -> senior and from senior -> junior. However describing our thought process on that, and code review in general, is a separate blog post.
+```
 
 Because of this process code in our `develop` branch stays relatively stable. But you've probably noticed that the widget Robin added is still not in production, where the customer is desperately waiting for it. The process for it to get there is also simple:
 
@@ -34,6 +34,6 @@ Assuming the customer loves the widget and is ready to push it to production:
 2. Batman pushes `develop` and `master` to the central git repo.
 3. Jenkins follows the same process to deploy the `develop` branch to the development environment and the `master` branch to the production environment.
 
-That's the whole process. It's as "continuous" as we can stand it right now. I've tried hard here to focus on the process of writing code and merging code while ignoring man other things that are worth diving into, like how we actually deploy the code.
+That's the whole process. It's as "continuous" as we can stand it right now. I've tried hard here to focus on the process of writing code and merging code while ignoring many other things that are worth diving into, like how we actually deploy the code.
 
 The most important thing to me: it works for us right now, enabling us to effectively write, test and deploy code in a timely manner. From this position we can iterate to make our process even better.
