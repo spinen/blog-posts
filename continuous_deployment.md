@@ -2,7 +2,17 @@ Continuous Integration (CI) and Continuous Deployment (CD) are popular software 
 
 Our deployment process maps environments to the [git-flow](https://github.com/nvie/gitflow) cycle. It's best shown by example:
 
-#### Deploying to the Development environment
+#### Preparing the target node
+
+Naturally the target node to which we intend to deploy the code has to have the necessary packages and tools to be able to run everything we want. We use [Chef](http://www.chef.io) as our primary configuration management tool, not only to install tools and packages, but also to set up our desired directory structure for the application. If we call our example project `virtual-batcave`, that directory structure looks like this:
+
+1. Create directory `/var/www/virtual-batcave`
+2. Create file `/var/www/virtual-batcave/.env` to hold all the relevant environment variables for the application.
+3. Create directory `/data/virtual-batcave`
+4. Create symlink `/var/www/virtual-batcave` pointing to--> `/data/virtual-batcave`
+5. Configure the web server root directory to be `/var/www/virtual-batcave/current` (a directory that doesn't exist yet)
+
+#### Merging a feature into the `develop` branch
 
 1. Developer A - let's call him Robin - checks out a project and starts a new feature: `feature/add-widget`.
 
@@ -16,34 +26,29 @@ Our deployment process maps environments to the [git-flow](https://github.com/nv
 
 (Since the developer has his branch merged by the git tool, he must manually delete the branch locally. We hardly every use `git flow feature finish`)
 
----- Continuous deployment of Development starts here-----------
+6. An accepted merge request is a commit to the `develop` branch, which prompts a web hook from our central git repository to Jenkins. Prompting
+	a. Jenkins runs all tests again against the `develop` branch.
+	b. Installs all dependencies to the local workspace. (We develop with the Laravel framework, so this generally involves [Composer](http.com//composer.com) and [npm](http://npm.com))
+	c. Create a zip file with **_all files necessary for deployment._**
 
-An accepted merge request is
+#### Deploying the code artifact
 
-All tests run on Develop, a build artifact is created. (composer install, etc.)
+1. Jenkins copies the artifact (with scp) to a target server directory named `/var/www/virtual-batcave/BUILD_ID`. BUILD_ID is an environment variable available in the Jenkins workspace
 
-Jenkins copies the artifact to a target server directory named /var/www/project/BUILD_ID
+3. Create a symlink pointing `/var/www/virtual-batcave/BUILD_ID/.env` to--> `/var/www/virtual-batcave/.env`.
 
-Do all commands to prepare the site (migrate the DB, etc)
+4. Create a symlink pointing `/var/www/virtual-batcave/BUILD_ID/storage` to--> `/var/www/virtual-batcave/storage`.
 
-Move the symlink /var/www/project/current to point to /var/www/project/BUILD_ID
+5. Do all commands to prepare the site (migrate the DB, etc)
 
-New feature is deployed to Development environment!
+4. Move the symlink `/var/www/virtual-batcave/current` to point to-->`/var/www/virtual-batcave/BUILD_ID`
 
--------- deploying to Qanda ---------
+New feature is deployed to the Development environment!
 
-Developer B starts a release branch with git flow release/0.2.3
+#### Conclusion
 
-Push the release branch to Jenkins 
+As we mentioned earlier. We map our environments to the git-flow model of branching merging. The `develop` branch of code is automatically deployed to the development environment, which is an environment only accessible inside our network. We deploy our `release` branches to a QandA environment, an environment that is identical to production and _is_ accessible to the world. Finally we deploy our `master` branch of code to the live production site. In all cases the deployment is prompted automatically with a push to the specific branch, and the deployment process is identical.
 
-All tests run in Jenkins -> Build artifact is created.
+This deployment process is not perfect, by any means. In fact, looking through these steps almost every one presents opportunities for optimization. However one important principle here is: **_it works_**. That give us the ability to build and deploy code quickly and consistently while we improve the process.
 
-deployment process is exactly the same as development, but to Qanda.
 
------- deploying to Production -----
-
-Merge release into master. 
-
-Push master to git repo.
-
-deployment process is identical
