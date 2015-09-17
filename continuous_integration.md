@@ -15,9 +15,9 @@ Our CI model is built from the [git-flow](https://github.com/nvie/gitflow) model
 	b. Create an artifact (a zip file in this case) of everything needed to deploy the code, including all dependencies.
 	c. Deploy the code to our development environment.
 	
-```
-We have had great success with making MRs from junior -> senior and from senior -> junior. However describing our thought process on that, and code review in general, is a separate blog post.
-```
+>We have had great success with making MRs from junior -> senior and from senior -> junior. 
+>However describing our thought process on that, and code review in general, is a separate blog post.
+
 #### Starting a Release
 
 Because of this process code in our `develop` branch stays relatively stable. But you've probably noticed that the widget Robin added is still not in production, where the customer is desperately waiting for it. The process to put it there is also simple:
