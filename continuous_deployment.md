@@ -1,4 +1,4 @@
-Continuous Integration (CI) and Continuous Deployment (CD) are popular software development buzzwords that mean a lot of things to a lot of people. At SPINEN we really embraced the concepts of CI/CD about 2 years ago, and have gone through several iterations of the process. We are not perfect now, but we are much better now than we were when we started (Continuous Improvement.)
+Continuous Integration (CI) and Continuous Deployment (CD) are popular software development buzzwords that mean a lot of things to a lot of people. At SPINEN we really embraced the concepts of CI/CD about 2 years ago, and have gone through several iterations of the process. Our process is not perfect now, but we have improved it a great deal since we started (Continuous Improvement.)
 
 Our deployment process maps environments to the [git-flow](https://github.com/nvie/gitflow) cycle. It's best shown by example:
 
@@ -18,17 +18,17 @@ Naturally the target node to which we intend to deploy the code has to have the 
 
 2. Robin finishes the feature and runs all tests locally.
 
-3. Robin pushes his feature branch to the central git repository. This action prompts all tests to run in [Jenkins](http://jenkins-ci.org) via web hook.
+3. Robin pushes his feature branch to the central git repository. This action prompts all tests to run in [Jenkins](http://jenkins-ci.org) via webhook.
 
-4. Robin makes a merge request (MR) to another developer, let's call him Batman (we usually assign MRs Junior -> Senior and Senior -> Junior.) This action prompts all tests to run on Jenkins. The test status of the branch shows up in the merge request.
+4. Robin makes a merge request (MR) to another developer, let's call him Batman (we usually assign MRs from Junior -> Senior and Senior -> Junior.) This action prompts all tests to run on Jenkins. The test status of the branch shows up in the merge request.
 
 5. Batman accepts the MR and branch `feature/add-widget` is merged into `develop`. 
 
 (Since the developer has his branch merged by the git tool, he must manually delete the branch locally. We hardly every use `git flow feature finish`)
 
-6. An accepted merge request is a commit to the `develop` branch, which prompts a web hook from our central git repository to Jenkins. Prompting
+6. An accepted merge request is a commit to the `develop` branch, which prompts a webhook from our central git repository to Jenkins. Prompting
 	a. Jenkins runs all tests again against the `develop` branch.
-	b. Installs all dependencies to the local workspace. (We develop with the Laravel framework, so this generally involves [Composer](http.com//composer.com) and [npm](http://npm.com))
+	b. Installs all dependencies to the local workspace. (We develop with the Laravel framework, so this generally involves [Composer](https://getcomposer.org/) and [npm](https://www.npmjs.com/))
 	c. Create a zip file with **_all files necessary for deployment._**
 
 #### Deploying the code artifact

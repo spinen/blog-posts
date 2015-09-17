@@ -1,4 +1,4 @@
-Continuous Integration (CI) and Continuous Delivery (CD) are natural counterparts of the Agile process. At Spinen we started working on a  model of Continuous Integration about 2 years ago. We are a small team (about 7 people) and our CI model has evolved over time. About 1 year ago we brought on some new graduates. Bringing on new people really forced us to standardize some practices we had been trying. It also helped us identify some (figurative) land mines that we had all simply known to step around up to that point.
+Continuous Integration (CI) and Continuous Delivery (CD) are natural counterparts of the Agile process. At SPINEN we started working on a  model of Continuous Integration about two years ago. We are a small team (about seven people) and our CI model has evolved over time. Recently we hired some new graduates. Bringing on new people really forced us to standardize some practices we had been trying. It also helped us identify some (figurative) land mines that we had all simply known to step around up to that point.
 
 #### Coding out a feature
 
@@ -20,7 +20,7 @@ We have had great success with making MRs from junior -> senior and from senior 
 ```
 #### Starting a Release
 
-Because of this process code in our `develop` branch stays relatively stable. But you've probably noticed that the widget Robin added is still not in production, where the customer is desperately waiting for it. The process for it to get there is also simple:
+Because of this process code in our `develop` branch stays relatively stable. But you've probably noticed that the widget Robin added is still not in production, where the customer is desperately waiting for it. The process to put it there is also simple:
 
 1. Batman checks out the `develop` branch of the project with all recent changes.
 2. Batman starts a release branch with the command `git flow release start X.Y.ZZ`
@@ -29,7 +29,7 @@ Because of this process code in our `develop` branch stays relatively stable. Bu
 	b. Create a zip file artifact of the code with all dependencies.
 	c. Deploy the code to our QandA environment
 
-The QandA site is a publicly accessible site deployed to a production-like environment. This allows the customer to mess around with the new widget and find all the bugs that we haven't already found.  At this point any work done on the `release/X.Y.ZZ` branch should be bug fixes to make the promised widget work. If the customer comes up with new ideas, for a new feature, those changes should not be added to the current release.
+The QandA site is a publicly accessible site deployed to a production-like environment. This allows the customer to mess around with the new widget and any bugs that we haven't already found.  At this point any work done on the `release/X.Y.ZZ` branch should be bug fixes to make the promised widget work. If the customer comes up with new ideas, for a new feature, those changes should not be added to the current release.
 
 #### Merging into Master
 
@@ -41,4 +41,4 @@ Assuming the customer loves the widget and is ready to push it to production:
 
 That's the whole process. It's as "continuous" as we can stand it right now. I've tried hard here to focus on the process of writing code and merging code while ignoring many other things that are worth diving into, like how we actually deploy the code.
 
-The most important thing to me: it works for us right now, enabling us to effectively write, test and deploy code in a timely manner. From this position we can iterate to make our process even better.
+The most important thing to me: It works for us right now, enabling us to effectively write, test and deploy code in a timely manner. From this position we can iterate to make our process even better.
